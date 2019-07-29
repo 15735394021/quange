@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.UserMapper">
+
+    <!-- 可根据自己的需求，是否要使用 -->
+    <!--<resultMap type="Librarian" id="LibrarianMap">-->
+
+    <!--<id column="id" property="id" jdbcType="INTEGER" />-->
+    <!--<result column="userName" property="useName" jdbcType="VARCHAR" />-->
+    <!--<result column="password" property="password" jdbcType="VARCHAR" />-->
+    <!--<result column="age" property="age" jdbcType="INTEGER" />-->
+    <!--<result column="position" property="position" jdbcType="VARCHAR" />-->
+    <!--</resultMap>-->
+    <!--             mapper里的方法名         形参类型   com.example.demo.entity.Game -->
+    <select id="getUser" parameterType="STRING" resultType="Map">
+        select *
+        from users u left join game9 g on u.checks=g.id
+          where u.uname = #{name}
+    </select>
+
+    <select id="getUsers"  resultType="com.example.demo.entity.Users">
+        select * from users
+    </select>
+
+    <update id="update" parameterType="com.example.demo.entity.User">
+        update users u set
+          u.checks=1+u.`checks`,last_edit_time=now()
+        where uname=#{name}
+    </update>
+
+    <insert id="insert" parameterType="com.example.demo.entity.User">
+        insert into users(uname,checks,create_time,status)
+        values(#{name},1,now(),'1')
+    </insert>
+
+    <delete id="delete" parameterType="com.example.demo.entity.User">
+        delete from user
+        where id=#{id}
+    </delete>
+</mapper>
